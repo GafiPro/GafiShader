@@ -148,15 +148,15 @@ public final class GafiShaderController {
         }
 
         void apply(ClientWorld world) {
-            if (mode == Mode.FIXED) world.setTimeOfDay(fixedTime);
+            if (mode == Mode.FIXED) world.setTime(world.getTime(), fixedTime, false);
             else {
                 simulationTime += speed;
-                world.setTimeOfDay(Math.round(simulationTime));
+                world.setTime(world.getTime(), Math.round(simulationTime), false);
             }
         }
 
         void restore(ClientWorld world) {
-            world.setTimeOfDay(restoreTime);
+            world.setTime(world.getTime(), restoreTime, true);
         }
 
         String describe() {
