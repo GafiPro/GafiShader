@@ -2,7 +2,7 @@
 
 **GafiShader** é um client mod Fabric para controlar localmente o tempo, clima e o Iris/Complementary Reimagined através de comandos.
 
-O módulo foi desenhado para o projeto GafiScript, mas é deliberadamente **100% client-side**: não envia os comandos para o servidor e não precisa de permissões de operador para aplicar os overrides visuais locais.
+O GafiShader é um projeto independente e é deliberadamente **100% client-side**: não envia os comandos para o servidor e não precisa de permissões de operador para aplicar os overrides visuais locais.
 
 ## Compatibilidade
 
