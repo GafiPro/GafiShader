@@ -115,11 +115,11 @@ jobs:
               s = s.replace(".getDayTime()", ".getOverworldClockTime()")
               s = s.replace(".getTimeOfDay()", ".getOverworldClockTime()")
               s = s.replace("world.setTimeFromServer(world.getGameTime(), fixedTime, false)",
-                            "world.setTimeFromServer(world.getGameTime(), fixedTime)")
+                            "world.setTimeFromServer(fixedTime)")
               s = s.replace("world.setTimeFromServer(world.getGameTime(), Math.round(simulationTime), false)",
-                            "world.setTimeFromServer(world.getGameTime(), Math.round(simulationTime))")
+                            "world.setTimeFromServer(Math.round(simulationTime))")
               s = s.replace("world.setTimeFromServer(world.getGameTime(), restoreTime, true)",
-                            "world.setTimeFromServer(world.getGameTime(), restoreTime)")
+                            "world.setTimeFromServer(restoreTime)")
               
 
               path.write_text(s, encoding="utf-8")
