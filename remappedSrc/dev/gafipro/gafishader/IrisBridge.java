@@ -50,8 +50,8 @@ public final class IrisBridge {
             Minecraft client = Minecraft.getInstance();
             Object api = getApi();
             Method method = Class.forName(API_CLASS).getMethod("openMainIrisScreenObj", Object.class);
-            Object screen = method.invoke(api, client.screen);
-            if (screen instanceof Screen irisScreen) client.setScreen(irisScreen);
+            Object screen = method.invoke(api, client.gui.screen());
+            if (screen instanceof Screen irisScreen) client.gui.setScreen(irisScreen);
             else throw new IllegalStateException("O Iris não devolveu um Screen válido.");
         } catch (ReflectiveOperationException | LinkageError e) {
             throw new IllegalStateException("Não foi possível abrir as opções do Iris.", e);

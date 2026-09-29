@@ -13,7 +13,7 @@ public final class GafiShaderClient implements ClientModInitializer {
     public void onInitializeClient() {
         GafiShaderController.reset();
         GafiShaderCommands.register();
-        ClientTickEvents.END_WORLD_TICK.register(GafiShaderController::tick);
+        ClientTickEvents.END_LEVEL_TICK.register(GafiShaderController::tick);
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> GafiShaderController.reset());
         LOGGER.info("GafiShader client initialized.");
     }
