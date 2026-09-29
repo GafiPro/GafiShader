@@ -12,9 +12,10 @@
     "client": ["dev.gafipro.gafishader.GafiShaderClient"]
   },
   "depends": {
-    "fabricloader": ">=0.19.0",
-    "minecraft": "1.21.11",
-    "fabric-api": ">=0.141.0+1.21.11"
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.2",
+    "fabric-api": ">=0.160.0",
+    "java": ">=25"
   },
   "suggests": {"iris": ">=1.10.7"}
 }
