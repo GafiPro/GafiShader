@@ -28,14 +28,14 @@ public final class GafiShaderController {
     public static void setFixedTime(long timeOfDay, long durationTicks) {
         Minecraft client = Minecraft.getInstance();
         if (client.level == null) throw new IllegalStateException("Não estás num mundo.");
-        timeOverride = TimeOverride.fixed(client.level.getOverworldClockTime(), timeOfDay, durationTicks);
+        timeOverride = TimeOverride.fixed(client.level.getDayTime(), timeOfDay, durationTicks);
         applyImmediately();
     }
 
     public static void freezeTime(long durationTicks) {
         Minecraft client = Minecraft.getInstance();
         if (client.level == null) throw new IllegalStateException("Não estás num mundo.");
-        long current = client.level.getOverworldClockTime();
+        long current = client.level.getDayTime();
         timeOverride = TimeOverride.fixed(current, current, durationTicks);
         applyImmediately();
     }
@@ -44,7 +44,7 @@ public final class GafiShaderController {
         if (multiplier < 0) throw new IllegalArgumentException("A velocidade do tempo não pode ser negativa.");
         Minecraft client = Minecraft.getInstance();
         if (client.level == null) throw new IllegalStateException("Não estás num mundo.");
-        long current = client.level.getOverworldClockTime();
+        long current = client.level.getDayTime();
         timeOverride = TimeOverride.speed(current, current, multiplier, durationTicks);
         applyImmediately();
     }
@@ -86,7 +86,7 @@ public final class GafiShaderController {
     public static String weatherStatus() { return weatherOverride == null ? "normal" : weatherOverride.describe(); }
 
     public static long resolveFullMoonNight(ClientLevel world) {
-        long current = world.getOverworldClockTime();
+        long current = world.getDayTime();
         long currentDay = Math.floorDiv(current, 24000L);
         long daysUntilFullMoon = Math.floorMod(-currentDay, 8L);
         if (daysUntilFullMoon == 0 && Math.floorMod(current, 24000L) > 13000L) daysUntilFullMoon = 8L;
@@ -94,7 +94,7 @@ public final class GafiShaderController {
     }
 
     public static long resolveNextSunset(ClientLevel world) {
-        long current = world.getOverworldClockTime();
+        long current = world.getDayTime();
         long day = Math.floorDiv(current, 24000L);
         if (Math.floorMod(current, 24000L) >= 12000L) day++;
         return day * 24000L + 12000L;
@@ -104,7 +104,7 @@ public final class GafiShaderController {
         Minecraft client = Minecraft.getInstance();
         if (client.level == null) return "sem mundo";
         ClientLevel world = client.level;
-        return "time=" + Math.floorMod(world.getOverworldClockTime(), 24000L)
+        return "time=" + Math.floorMod(world.getDayTime(), 24000L)
                 + " rain=" + String.format(java.util.Locale.ROOT, "%.2f", world.getRainLevel(1.0f))
                 + " thunder=" + String.format(java.util.Locale.ROOT, "%.2f", world.getThunderLevel(1.0f));
     }
@@ -148,15 +148,15 @@ public final class GafiShaderController {
         }
 
         void apply(ClientLevel world) {
-            if (mode == Mode.FIXED) world.setTimeFromServer(fixedTime);
+            if (mode == Mode.FIXED) world.setTimeFromServer(world.getGameTime(), fixedTime, false);
             else {
                 simulationTime += speed;
-                world.setTimeFromServer(Math.round(simulationTime));
+                world.setTimeFromServer(world.getGameTime(), Math.round(simulationTime), false);
             }
         }
 
         void restore(ClientLevel world) {
-            world.setTimeFromServer(restoreTime);
+            world.setTimeFromServer(world.getGameTime(), restoreTime, true);
         }
 
         String describe() {
